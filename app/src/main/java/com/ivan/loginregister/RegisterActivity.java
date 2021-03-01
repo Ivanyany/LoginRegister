@@ -16,6 +16,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     //按钮
     private Button btn_save;
     private Button btn_reset;
+    private Button btn_back;
 
     //输入框
     private EditText et_account;
@@ -33,6 +34,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         btn_save.setOnClickListener(this);
         btn_reset = findViewById(R.id.btn_reset);
         btn_reset.setOnClickListener(this);
+        btn_back = findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(this);
 
         //输入框实例化
         et_account = findViewById(R.id.et_account);
@@ -50,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String passwordConfirm = et_password_confirm.getText().toString();
         String phone = et_phone.getText().toString().trim();
         switch (id) {
+            //保存
             case R.id.btn_save:
                 if (account.length() == 0){
                     Toast.makeText(RegisterActivity.this, "账号不能为空", Toast.LENGTH_SHORT).show();
@@ -77,6 +81,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 LoginActivity.users.add(user);
                 //跳转到登录页面
                 finish();//关闭当前页面即可
+                break;
+            //重置
+            case R.id.btn_reset:
+                et_account.setText("");
+                et_password.setText("");
+                et_password_confirm.setText("");
+                et_phone.setText("");
+                break;
+            //返回
+            case R.id.btn_back:
+                finish();
                 break;
         }
     }

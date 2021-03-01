@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ivan.loginregister.entity.User;
 
@@ -25,6 +27,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button btn_register;
     private Button btn_forget;
 
+    private EditText et_account;
+    private EditText et_password;
+
     public static List<User> users = new ArrayList<>();
 
     @Override
@@ -40,6 +45,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         btn_forget = findViewById(R.id.btn_forget);
         btn_forget.setOnClickListener(this);
+
+        et_account = findViewById(R.id.et_account);
+        et_password = findViewById(R.id.et_password);
     }
 
     @Override
@@ -55,6 +63,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Intent intent = new Intent();
         switch (id) {
             case R.id.btn_login:
+                String account = et_account.getText().toString();
+                String password = et_password.getText().toString();
+
+                if (account.length() == 0) {
+                    Toast.makeText(LoginActivity.this, "账号不能为空", Toast.LENGTH_SHORT).show();
+                    return;//中断方法
+                }
+                if (password.length() == 0) {
+                    Toast.makeText(LoginActivity.this, "密码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                User user = login(account, password);
+                if (user == null) {
+                    Toast.makeText(LoginActivity.this, "登录失败,账号或密码错误", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    //登录成功
+                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                    //跳转到首页
+                    intent.setClass(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.btn_register:
                 intent.setClass(LoginActivity.this, RegisterActivity.class);
@@ -65,5 +95,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
                 break;
         }
+    }
+
+    /**
+     * 登录的方法
+     * @param account
+     * @param password
+     * @return
+     */
+    private User login(String account, String password) {
+        for (User user : users) {
+            if (account.equals(user.getAccount()) && password.equals(user.getPassword())) {
+                return user;
+            }
+        }
+        return null;
     }
 }

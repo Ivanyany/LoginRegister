@@ -20,6 +20,7 @@
             android:id="@+id/et_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="1"
             android:hint="请输入账号"/>
 
         <EditText
@@ -27,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
+            android:text="1"
             android:hint="请输入密码"/>
 
         <CheckBox
